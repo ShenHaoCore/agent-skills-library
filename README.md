@@ -4,6 +4,14 @@
 
 适配 [GitHub Copilot](https://docs.github.com/en/copilot)（VS Code）、[Claude Code](https://docs.anthropic.com/en/docs/claude-code) 以及其他支持 Agent Skills 规范的 AI 编程工具。
 
+**一句话安装到当前项目：**
+
+```bash
+npx skills add ShenHaoCore/agent-skills-library
+```
+
+更多选项见下方 [如何安装](#如何安装)。
+
 ## 项目简介
 
 本仓库存放可复用的 Agent Skills：每个技能是一个独立文件夹，用 `SKILL.md` 告诉 AI「做什么、何时用、怎么做」。
@@ -52,12 +60,55 @@ agent-skills-library/
 
 ## 如何安装
 
-### GitHub Copilot（VS Code）
+### 一句话安装（推荐）
 
-1. 克隆本仓库到本地，或将其作为子模块 / 工作区文件夹加入
-2. 确保技能位于 `.github/skills/`（本仓库默认路径）
-3. 打开 VS Code，启用 GitHub Copilot Chat
-4. 在 Chat 中通过 `@` 或技能选择器选用技能（具体 UI 以当前 Copilot 版本为准）
+将本库技能安装到**当前项目**或其他 Agent 技能目录（已用 `npx skills` 验证可发现全部 25 个技能）：
+
+```bash
+# 交互选择要安装的技能
+npx skills add ShenHaoCore/agent-skills-library
+
+# 非交互：安装全部技能
+npx skills add ShenHaoCore/agent-skills-library -s '*' -y
+
+# 仅查看可安装列表（不安装）
+npx skills add ShenHaoCore/agent-skills-library -l
+```
+
+也可以只装单个技能（名称与技能目录名一致，如 `async-patterns`）：
+
+```bash
+npx skills add ShenHaoCore/agent-skills-library -s async-patterns -y
+```
+
+若使用 GitHub CLI（需较新版本支持 `gh skill`）：
+
+```bash
+# 交互选择
+gh skill install ShenHaoCore/agent-skills-library
+
+# 安装全部（技能在 .github/skills，通常需允许隐藏目录）
+gh skill install ShenHaoCore/agent-skills-library --all --allow-hidden-dirs
+```
+
+安装目标目录因 Agent 而异（例如项目内 `.github/skills`、`.agents/skills`、`.claude/skills` 等），以你选择的 Agent / CLI 提示为准。
+
+> **说明**：安装后技能以**目录名**（如 `async-patterns`）出现；本仓库按领域分层只为便于维护，不影响一句话安装发现。
+
+### 作为独立仓库使用
+
+直接克隆并打开本仓库，Copilot / 支持 Skills 的工具会扫描 `.github/skills/`：
+
+```bash
+git clone https://github.com/ShenHaoCore/agent-skills-library.git
+cd agent-skills-library
+```
+
+### GitHub Copilot（VS Code）补充
+
+1. 用上面的一句话安装到你的业务仓库，或将本仓库加入工作区
+2. 打开 VS Code，启用 GitHub Copilot Chat
+3. 在 Chat 中通过技能选择器或描述触发（具体 UI 以当前 Copilot 版本为准）
 
 可选：本仓库 `.vscode/settings.json` 配置了：
 
@@ -71,10 +122,10 @@ agent-skills-library/
 
 > **说明**：`chat.skillsLocations` 是否可用取决于 VS Code / Copilot 版本，**以实际版本为准**。若设置无效，保持技能在 `.github/skills/` 即可。
 
-### Claude Code
+### Claude Code 补充
 
-1. 克隆本仓库
-2. 按 Claude Code 文档将技能目录加入其 skills 搜索路径，或把需要的技能复制/软链到 Claude Code 识别的 skills 目录
+1. 优先使用 `npx skills add ...` / `gh skill install ...` 并指定 Claude Code 目标（若 CLI 提供 Agent 选项）
+2. 或克隆后将技能复制/软链到 Claude Code 识别的 skills 目录
 3. 在会话中通过技能名或描述触发
 
 不同工具的安装路径可能不同，原则是：**让运行时能发现含 `SKILL.md` 的技能文件夹**。
