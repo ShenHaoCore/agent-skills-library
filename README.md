@@ -10,7 +10,7 @@
 npx skills add ShenHaoCore/agent-skills-library
 ```
 
-更多选项见下方 [如何安装](#如何安装)。
+也可在 Agent 对话中用自然语言请它执行上述安装（需批准终端命令）。更多选项见 [如何安装](#如何安装)。
 
 ## 项目简介
 
