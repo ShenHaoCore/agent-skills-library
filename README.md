@@ -95,6 +95,28 @@ gh skill install ShenHaoCore/agent-skills-library --all --allow-hidden-dirs
 
 > **说明**：安装后技能以**目录名**（如 `async-patterns`）出现；本仓库按领域分层只为便于维护，不影响一句话安装发现。
 
+### 自然语言对话安装
+
+本库**不提供**独立于 CLI 的安装协议；但在 Cursor、Copilot Agent、Claude Code 等**允许执行终端命令**的环境中，可以用自然语言让 Agent 代跑安装，例如：
+
+```text
+请把 GitHub 上 ShenHaoCore/agent-skills-library 的技能安装到当前项目。
+先列出可安装技能，我确认后再装全部（或只装 async-patterns）。
+```
+
+Agent 通常会执行类似：
+
+```bash
+npx skills add ShenHaoCore/agent-skills-library -l
+npx skills add ShenHaoCore/agent-skills-library -s '*' -y
+```
+
+注意：
+
+1. 需要你在对话中**批准**终端/网络权限（以当前工具的安全策略为准）
+2. 安装完成后建议**新开一轮对话**，以便 Agent 重新发现技能
+3. 装好后即可用自然语言使用技能（如「帮我做 UI 走查」），由 Agent 按 `description` 自动选用
+
 ### 作为独立仓库使用
 
 直接克隆并打开本仓库，Copilot / 支持 Skills 的工具会扫描 `.github/skills/`：
